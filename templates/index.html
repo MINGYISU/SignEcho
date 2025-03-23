@@ -10,5 +10,8 @@
     <button onclick="generateAndPlay('{{ text_to_speak }}')">Generate and Play</button>
     <div id="status" class="status"></div>
     <audio id="audioPlayer" controls style="display: none;">
+        <source src="{{ url_for('get_audio') }}" type="audio/wav">
+        Your browser does not support the audio element.
+    </audio>
 
 {% endblock %}

@@ -1,5 +1,5 @@
 import base64
-from dataset import load_dataset
+import json
 
 # Base prompt (as model configuration)
 BASE_PROMPT = """You are a professional sign language recognition expert. Please carefully analyze the hand gesture features in each image and return the corresponding English word.
@@ -20,18 +20,20 @@ def encode_image_to_base64(image_path):
         return base64.b64encode(image_file.read()).decode('utf-8')
 
 def gen_prompt(leng: int | None) -> str:
-    dataset = load_dataset('json', data_files='videos.jsonl')
+    with open('videos.jsonl', 'r') as f:
+        dataset = json.load(f)
     if leng is None:
         leng = len(dataset)
     else:
         assert 0 < leng <= len(dataset)
     
-    prompt_data = []
-    dataset = dataset.shuffle(seed=49).select(range(leng))
+    prompt_data = ""
+    import random
+    dataset = random.sample(dataset, leng)
     for item in dataset:
         base64_img = [encode_image_to_base64(img_path) for img_path in item['frames']]
-        instrction = item['label']
-        prompt_data.append({'image': base64_img, 'meaning': instrction})
+        instruction = item['label']
+        prompt_data.append({'image': base64_img, 'meaning': instruction})
 
     # generate content parts
     content_parts = [{"text": BASE_PROMPT, "text": DETAILED_PROMPT}]

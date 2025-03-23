@@ -14,6 +14,16 @@ Please follow these rules for recognition:
 3. Return "UNKNOWN" if the gesture is incomplete or unclear
 4. Ensure recognition results match the standard sign language vocabulary"""
 
+ASL_WORDS = ['please', 'done_finish', 'help', 'sign', 'learn', 'dog', 'bathroom', 'fine', 'more', 'see_you_later', 'want', 'no', 'yes', 'mother', 'like', 'milk', 'again_or_repeat', 'cat', 'what', 'father', 'me', 'go_to', 'eat', 'thank_you', 'hello']
+
+def return_instruction(low):
+    INSTRUCTION_PROMPT = f"""You are an AI language assistant helping to translate recognized American Sign Language (ASL) word sequences into natural, grammatically correct English sentences. 
+    Here is a list of recognized ASL words (in order): {ASL_WORDS}
+    Now you will be shown a list of appeared words: {low}
+    Please convert this list into a smooth and natural English sentence, not multiple sentences. The order could be changed but the meaning should be smooth. Capitalize and punctuate it properly. Do not remove words. 
+    """
+    return INSTRUCTION_PROMPT
+
 def encode_image_to_base64(image_path):
     """Convert an image file to base64 encoding."""
     with open(image_path, "rb") as image_file:

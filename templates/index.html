@@ -5,7 +5,10 @@
 {% endblock %}
 
 {% block body %}
-    <h1>Sign Echo</h1>
+    <h1>Analyzing sign languages . . . </h1>
     <img src="/video_feed" class="video-feed">
+    <button onclick="generateAndPlay('{{ text_to_speak }}')">Generate and Play</button>
+    <div id="status" class="status"></div>
+    <audio id="audioPlayer" controls style="display: none;">
 
 {% endblock %}
